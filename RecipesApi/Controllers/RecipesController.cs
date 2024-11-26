@@ -27,7 +27,7 @@ namespace Recipes_api.Controllers
          /// <summary>
          /// Post a new recipe
          /// </summary>
-         [HttpPost]
+        [HttpPost]
         public async Task<ActionResult<Recipe>> PostRecipes(Recipe recipe)
         {
 
@@ -38,7 +38,7 @@ namespace Recipes_api.Controllers
          
         }     
 
-          [HttpGet("/recipes/searchByIngredients/{ingredient}")]
+        [HttpGet("/recipes/searchByIngredients/{ingredient}")]
         public ActionResult<IEnumerable<Recipe>> GetFilterRecipesByIngredients(string ingredient)
         {
             var recipes = _recipeContext.Recipes
@@ -83,27 +83,27 @@ namespace Recipes_api.Controllers
         }
 
         [HttpPut("{id}")]
-    public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
-    {
-        if (id != recipe.Id)
+        public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
         {
-            return StatusCode(400, "The id parameter should be equal to the id of the new data of the object to be updated");
+            if (id != recipe.Id)
+            {
+                return StatusCode(400, "The id parameter should be equal to the id of the new data of the object to be updated");
+            }
+
+            // Check if the recipe exists in the database
+            var existingRecipe = await _recipeContext.Recipes.FindAsync(id);
+            if (existingRecipe == null)
+            {
+                return StatusCode(404, "The recipe you want to update is not found in the database");
+            }
+
+            // Update the existing recipe with new values
+            _recipeContext.Entry(existingRecipe).CurrentValues.SetValues(recipe);
+
+            // Save changes to the database
+            await _recipeContext.SaveChangesAsync();
+            return Ok("Recipe has been updated successfully");
         }
-
-        // Check if the recipe exists in the database
-        var existingRecipe = await _recipeContext.Recipes.FindAsync(id);
-        if (existingRecipe == null)
-        {
-            return StatusCode(404, "The recipe you want to update is not found in the database");
-        }
-
-        // Update the existing recipe with new values
-        _recipeContext.Entry(existingRecipe).CurrentValues.SetValues(recipe);
-
-        // Save changes to the database
-        await _recipeContext.SaveChangesAsync();
-        return Ok("Recipe has been updated successfully");
-    }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecipe(int id)
@@ -118,7 +118,6 @@ namespace Recipes_api.Controllers
            await _recipeContext.SaveChangesAsync();
            return Ok("Recipe has been deleted successfully");
         }
-
 
     }
 }
