@@ -1,0 +1,60 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.active {
+  background-color: darkblue;
+  color: white;
+}
+.hotel-title {
+  font-family: "Libre Baskerville", serif;
+  font-size: 35px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.mat-toolbar {
+  padding: 10px;
+  background: rgba(235, 200, 128, 0.75) !important ;
+  color: #50423e;
+  
+}
+.signin-btn {
+  /* height: min-content; */
+  /* min-height: 48px; */
+  margin-right: 6px;
+  border-radius: 34px;
+  padding: 8px 24px;
+  /* padding-top: 12px;
+      padding-bottom: 12px;
+      padding-left: 24px;
+      padding-right: 24px; */
+  text-align: center;
+  font-size: 19px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  background: transparent;
+  color: #50423e;
+  border: 1px solid #50423e;
+}
+.signin-btn:hover {
+  background: #50423e;
+  color: rgba(235, 200, 128, 0.75);
+}
+.loggedin-btn {
+  border-right: 1px solid #50423e !important;
+  border: none;
+  border-radius: 0%;
+}
+@media (max-width: 800px) {
+  .mat-toolbar-row {
+    display: flex;
+    flex-direction: column !important;
+    padding: 0px;
+    height: 300px;
+  }
+  .spacer {
+    flex: 0 0 auto;
+  }
+  .loggedin-btn{
+    padding: 0px 8px;
+  }
+}

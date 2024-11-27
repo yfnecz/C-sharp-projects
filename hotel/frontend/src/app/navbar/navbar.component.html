@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <p class="hotel-title" routerLink="/">Serin Hotels</p>
+
+        <span class="spacer"></span>
+        <div *ngIf="isLoggedIn == false; else loggedIn">
+            <button mat-raised-button color="primary" routerLink="/login" routerLinkActive="active" class="signin-btn">
+                Sign in
+            </button>
+            <button mat-raised-button color="primary" routerLink="/signup" routerLinkActive="active" class="signin-btn">
+                Book now
+            </button>
+        </div>
+        <ng-template #loggedIn>
+            <p mat-raised-button color="primary" routerLink="/reserve" class="signin-btn loggedin-btn">
+                Book Rooms
+            </p>
+            <p mat-raised-button color="primary" routerLink="/dashboard" class="signin-btn loggedin-btn">
+                User Dashboard
+            </p>
+
+            <p mat-raised-button color="primary" (click)="logout()" routerLinkActive="active"
+                class="signin-btn loggedin-btn">
+                Log out
+            </p>
+        </ng-template>
+    </mat-toolbar-row>
+</mat-toolbar>

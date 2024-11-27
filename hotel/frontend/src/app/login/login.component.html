@@ -1,0 +1,42 @@
+<div class="login-form">
+    <p class="hotel-title" routerLink="/">Serin Hotels</p>
+
+    <div class="login-content">
+
+        <mat-toolbar class="login-toolbar">Sign in to your account</mat-toolbar>
+        <mat-card>
+            <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <mat-form-field>
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" id="username" formControlName="username" />
+                        <mat-error *ngIf="logInForm.get('username')?.hasError('required')">*Username is required
+                        </mat-error>
+                        <mat-error *ngIf="logInForm.get('username')?.hasError('minlength')">*Username should have atleast 4 characters
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+
+                    <input matInput type="password" id="password" formControlName="password" />
+                    <mat-error *ngIf="logInForm.get('password')?.hasError('required')">*Password is required
+                    </mat-error>
+                    <mat-error *ngIf="logInForm.get('password')?.hasError('minlength')">*Password should have atleast 6 characters
+                    </mat-error>
+
+                </mat-form-field>
+                <div>
+                    <button type="submit" mat-raised-button color="primary" type="submit"
+                        [disabled]="!logInForm.valid">
+                        Log in 
+                    </button>
+                </div>
+                <div class="go-to-signup-section">
+                    New here?  <a routerLink="/signup" class="go-to-signup-text">Sign up </a>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<div *ngIf="showPage">
+    <div *ngIf="showInvoice">
+        <mat-card class="invoice-card">
+            <mat-card-header>Your Reservation</mat-card-header>
+
+            <mat-card-content>
+                <ul class="invoice-list">
+                    <li>
+                        <div class="item-label">Room number:</div>
+                        <div class="item-value">{{ roomNo }}</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Capacity:</div>
+                        <div class="item-value">{{ capacity }} persons</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Check-in:</div>
+                        <div class="item-value">{{ checkin }}</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Check-out:</div>
+                        <div class="item-value">{{ checkout }}</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Total Room cost:</div>
+                        <div class="item-value">{{ ratePerNight }} * {{ totalNights }} = ${{ totalRoomCost }}</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Taxes:</div>
+                        <div class="item-value">${{ taxes }}</div>
+                    </li>
+                    <li>
+                        <div class="item-label">Extra Charges (Minibar + Laundry + Room Service):</div>
+                        <div class="item-value">${{ extraCharges }}</div>
+                    </li>
+                </ul>
+
+                <div class="invoice-total">
+                    <div class="item-label">Total Bill:</div>
+                    <div class="item-value">${{ totalBill }}</div>
+                </div>
+
+                <div class="invoice-actions">
+                    <button mat-raised-button class="close-button" (click)="close()">Cancel</button>
+                    <button mat-raised-button class="pay-button" (click)="confirmReserve()">Confirm Booking</button>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="reserve-form">
+        <div class="reserve-content">
+            <mat-toolbar class="form-title">Check Available Spaces to Book Your Stay</mat-toolbar>
+            <form [formGroup]="reserveForm">
+                <div>
+
+                    <mat-form-field>
+                        <mat-label>Check-in </mat-label>
+                        <input matInput type="date" id="username" formControlName="checkInDate" />
+                        <mat-error *ngIf="reserveForm.get('checkInDate')?.hasError('required')">*check-in is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <mat-label>Check-out </mat-label>
+                    <input matInput type="date" id="username" formControlName="checkOutDate" />
+                    <mat-error *ngIf="reserveForm.get('checkOutDate')?.hasError('required')">*Check-out is required
+                    </mat-error>
+                </mat-form-field>
+                <div style="margin: auto;">
+                    <button type="submit" mat-raised-button type="submit" [disabled]="!reserveForm.valid"
+                        (click)="getAvailableRooms()" class="check-btn">
+                        Check Availability
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="rooms">
+        <div *ngFor="let room of availableRooms" class="room">
+            <mat-toolbar class="room-toolbar"> {{room.Type}} </mat-toolbar>
+            <mat-card>
+                <img mat-card-image src="assets/room2.jpg" alt="" />
+                <mat-card-content>
+                    <em>Cost:</em> {{room.RatePerDay}}$ per night + extra charges <br>
+                    <div *ngIf="room.Capacity == 1; else morePersons" >
+                        <em>Capacity:</em> {{room.Capacity}} person<br>
+                    </div>
+                    <ng-template #morePersons>
+                        <em>Capacity:</em> {{room.Capacity}} persons<br>
+                    </ng-template>
+                    <button mat-raised-button
+                        (click)="roomAvailable(room.Id, room.Capacity, room.RatePerDay, room.Type)">Book Now</button>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
