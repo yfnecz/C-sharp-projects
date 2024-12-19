@@ -2,4 +2,4 @@
 
 RecipesAPI is a .NET API for managing a recipe collection
 
-hotel is a Hotel Reservation System with ASP.NET Core 6 and Angular
+hotel is a Hotel Reservation System with ASP.NET Core and Angular
